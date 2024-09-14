@@ -1,19 +1,21 @@
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 public class NewClass {
 
     private List<String> items;
     private List<Object> cachedObjects;
+    private SecureRandom secureRandom;
 
-    public ProblemNewClassaticClass() {
+    public NewClass() {
         items = new ArrayList<>();
         cachedObjects = new ArrayList<>();
+        secureRandom = new SecureRandom();
     }
 
     public void populateItems() {
-        if (new Random().nextBoolean()) {
+        if (secureRandom.nextBoolean()) {
             for (int i = 0; i < 10; i++) {
                 items.add("Item " + i);
             }
@@ -21,7 +23,7 @@ public class NewClass {
     }
 
     public void clearItems() {
-        items = null;
+        items.clear();
     }
 
     public void cacheData() {
@@ -35,17 +37,15 @@ public class NewClass {
         Object value = getRandomObject();
         if (value instanceof Integer) {
             return (Integer) value;
-        } else {
-            return 0;
         }
+        return 0;
     }
 
     private Object getRandomObject() {
-        if (new Random().nextBoolean()) {
+        if (secureRandom.nextBoolean()) {
             return "Not an Integer";
-        } else {
-            return new Random().nextInt(100);
         }
+        return secureRandom.nextInt(100);
     }
 
     public void simulateOperations() {
@@ -53,7 +53,7 @@ public class NewClass {
         populateItems();
         clearItems();
 
-        if (new Random().nextInt(10) > 5) {
+        if (secureRandom.nextInt(10) > 5 && items != null) {
             System.out.println(items.size());
         }
 
@@ -62,15 +62,15 @@ public class NewClass {
     }
 
     public static void main(String[] args) {
-        NewClass pc = new NewClass();
+        NewClass nc = new NewClass();
 
         for (int i = 0; i < 100; i++) {
             try {
-                pc.simulateOperations();
+                nc.simulateOperations();
             } catch (NullPointerException e) {
-                System.out.println("Caught a subtle NullPointerException.");
+                System.out.println("Caught a NullPointerException: " + e.getMessage());
             } catch (ClassCastException e) {
-                System.out.println("Caught a subtle ClassCastException.");
+                System.out.println("Caught a ClassCastException: " + e.getMessage());
             }
         }
     }

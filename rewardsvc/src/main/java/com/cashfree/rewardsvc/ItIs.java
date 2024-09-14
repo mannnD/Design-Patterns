@@ -18,29 +18,37 @@ public class ItIs {
             case EINVOICE_GCC:
                 return INGESTION_EINVOICEGCC;
             default:
-                return INGESTION_EINVOICE;
+                throw new IllegalArgumentException("Unsupported product: " + product);
         }
     }
 
     public static String getPostFixCreateActivityUrl(Product product, String templateType) {
-        if (Product.EINVOICE_GCC.equals(product)) {
+        if (Product.EINVOICE_GCC == product) {
             return "einvoice-gcc/activity/v1/EINVOICEGCC/create";
         }
-        if (Product.EINVOICE_MY.equals(product) && TemplateType.EINVOICE_MY_SALES.name().equals(templateType)) {
-            return "einvoice-my/activity/v1/EINVOICEMYSALES/create";
+        if (Product.EINVOICE_MY == product) {
+            TemplateType type = TemplateType.valueOf(templateType);
+            switch (type) {
+                case EINVOICE_MY_SALES:
+                case EINVOICE_MY_SALES_B2C:
+                    return "einvoice-my/activity/v1/EINVOICEMYSALES/create";
+                case EINVOICE_MY_PURCHASE:
+                    return "einvoice-my/activity/v1/EINVOICEMYPURCHASE/create";
+                default:
+                    throw new IllegalArgumentException("Unsupported template type for EINVOICE_MY: " + type);
+            }
         }
-        if (Product.EINVOICE_MY.equals(product) && TemplateType.EINVOICE_MY_PURCHASE.name().equals(templateType)) {
-            return "einvoice-my/activity/v1/EINVOICEMYPURCHASE/create";
+        if (Product.EINVOICE_INDIA == product) {
+            return "einvoice/activity/v1/EINVOICE/create";
         }
-        if (Product.EINVOICE_MY.equals(product) && TemplateType.EINVOICE_MY_SALES_B2C.name().equals(templateType)) {
-            return "einvoice-my/activity/v1/EINVOICEMYSALES/create";
-        }
-        return "einvoice/activity/v1/EINVOICE/create";
+        throw new IllegalArgumentException("Unsupported product: " + product);
     }
 
     public static String countryToFtpConfigProduct(String country) {
-        country = country.toLowerCase();
-        switch (country) {
+        if (country == null) {
+            throw new IllegalArgumentException("Country cannot be null");
+        }
+        switch (country.toLowerCase()) {
             case "my":
                 return "EINVOICE_MY";
             case "in":
@@ -48,8 +56,7 @@ public class ItIs {
             case "ksa":
                 return "EINVOICE_GCC";
             default:
-                return "EINVOICE_INDIA";
+                throw new IllegalArgumentException("Unsupported country: " + country);
         }
-
     }
 }
