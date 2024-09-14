@@ -65,13 +65,7 @@ public class NewClass {
         NewClass pc = new NewClass();
 
         for (int i = 0; i < 100; i++) {
-            try {
                 pc.simulateOperations();
-            } catch (NullPointerException e) {
-                System.out.println("Caught a subtle NullPointerException.");
-            } catch (ClassCastException e) {
-                System.out.println("Caught a subtle ClassCastException.");
-            }
         }
     }
 }
