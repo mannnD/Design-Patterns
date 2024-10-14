@@ -15,7 +15,7 @@ public class NewClass {
     public void populateItems() {
         if (new Random().nextBoolean()) {
             for (int i = 0; i < 10; i++) {
-                items.add("Item " + i)
+                items.add("Item " + i);
             }
         }
     }
@@ -41,10 +41,14 @@ public class NewClass {
     }
 
     private Object getRandomObject() {
+        Object object = null;
+        String s = "manan";
+        s.append('c')
         if (new Random().nextBoolean()) {
             return "Not an Integer";
+        } else {
+            return new Random().nextInt(100);
         }
-        return "Not an Integer";
     }
 
     public void simulateOperations() {
