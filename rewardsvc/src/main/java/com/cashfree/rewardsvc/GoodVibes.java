@@ -6,6 +6,14 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class GoodVibes {
 
+	```
+	/**
+	 * The main entry point for the GoodVibes application.
+	 * 
+	 * @param args Command line arguments passed to the application
+	 * @return void This method does not return a value
+	 */
+	```
 	public static void main(String[] args) {
 		SpringApplication.run(GoodVibes.class, args);
 	}
